@@ -1,10 +1,11 @@
 {
   "name": "node-vk-bot-api",
-  "version": "2.4.11",
+  "version": "2.5.0-0",
   "description": "🤖 VK bot framework for Node.js, based on Bots Long Poll API and Callback API",
   "main": "lib/index.js",
   "scripts": {
-    "test": "set TS_NODE_COMPILER_OPTIONS={\"module\":\"commonjs\", \"target\": \"es6\"} && mocha -r ts-node/register test/**.ts --project lib/tsconfig.json --timeout 5000"
+    "test": "set TS_NODE_COMPILER_OPTIONS={\"module\":\"commonjs\", \"target\": \"es6\"} && mocha -r ts-node/register test/**.ts --project lib/tsconfig.json --timeout 5000",
+    "build": "tsc"
   },
   "repository": {
     "type": "git"
@@ -37,14 +38,8 @@
   },
   "homepage": "https://github.com/node-vk-bot-api/node-vk-bot-api#readme",
   "dependencies": {
-    "@types/chai": "^4.2.3",
-    "@types/mocha": "^5.2.7",
     "axios": "^0.17.1",
     "biguint-format": "^1.0.1",
-    "ts-node": "^8.4.1",
-    "tslint": "^5.20.0",
-    "tslint-config-airbnb": "^5.11.2",
-    "typings": "^2.1.1",
     "vk-io": "^4.0.0-rc.20"
   },
   "directories": {
@@ -55,10 +50,17 @@
   },
   "devDependencies": {
     "@bifot/eslint-config": "^1.0.2",
+    "@types/chai": "^4.2.3",
+    "@types/mocha": "^5.2.7",
     "chai": "^4.2.0",
     "eslint": "^5.9.0",
     "eslint-config-airbnb-base": "^13.0.0",
     "eslint-plugin-import": "^2.13.0",
-    "mocha": "^6.2.0"
+    "mocha": "^6.2.0",
+    "ts-node": "^8.4.1",
+    "tslint": "^5.20.0",
+    "tslint-config-airbnb": "^5.11.2",
+    "typescript": "^3.6.3",
+    "typings": "^2.1.1"
   }
 }
