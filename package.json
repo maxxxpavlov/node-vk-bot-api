@@ -40,6 +40,7 @@
     "@types/chai": "^4.2.3",
     "@types/mocha": "^5.2.7",
     "axios": "^0.17.1",
+    "biguint-format": "^1.0.1",
     "ts-node": "^8.4.1",
     "tslint": "^5.20.0",
     "tslint-config-airbnb": "^5.11.2",

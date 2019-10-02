@@ -2,7 +2,7 @@ class Request {
   private request: any;
   private response: any;
 
-  constructor(...args) {
+  constructor(...args: any[]) {
     // if passed 3 args, than it's express (req, res, next)
     // else koa (ctx, next)
 
@@ -24,4 +24,4 @@ class Request {
   }
 }
 
-export default Request;
+export { Request };

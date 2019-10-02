@@ -207,6 +207,11 @@ balanced-match@^1.0.0:
   resolved "https://registry.yarnpkg.com/balanced-match/-/balanced-match-1.0.0.tgz#89b4d199ab2bee49de164ea02b89ce462d71b767"
   integrity sha1-ibTRmasr7kneFk6gK4nORi1xt2c=
 
+biguint-format@^1.0.1:
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/biguint-format/-/biguint-format-1.0.1.tgz#0ad9a81a48de96a79084c1a2fcc11bf27b80e284"
+  integrity sha512-EyEAXbBXdXHTmysr9bFjiTiFa7nDwew4N2qZ2Ka0aAM9oTidS5lNH3jVTBPFcaXyRCzLpw1cb3ATD+fzg89/fQ==
+
 bluebird@^3.1.1:
   version "3.5.5"
   resolved "https://registry.yarnpkg.com/bluebird/-/bluebird-3.5.5.tgz#a8d0afd73251effbbd5fe384a77d73003c17a71f"

@@ -1,16 +1,16 @@
 import { expect } from 'chai';
-import Markup from '../lib/markup';
+import { Markup } from '../lib/markup';
 
 describe('markup', () => {
   const test = (keyboard, oneTime, buttons) => {
-    expect(keyboard.__keyboard).to.be.an('object');
-    expect(keyboard.__keyboard.buttons[0]).to.be.an('array').to.have.length(buttons.length);
+    expect(keyboard.rawKeyboard).to.be.an('object');
+    expect(keyboard.rawKeyboard.buttons[0]).to.be.an('array').to.have.length(buttons.length);
 
     if (oneTime) {
-      expect(keyboard.__keyboard.one_time).to.be.equal(oneTime);
+      expect(keyboard.rawKeyboard.one_time).to.be.equal(oneTime);
     }
 
-    keyboard.__keyboard.buttons[0].forEach((button, index) => {
+    keyboard.rawKeyboard.buttons[0].forEach((button, index) => {
       const sourceButton = buttons[index];
 
       expect(button).to.be.an('object');
@@ -84,8 +84,8 @@ describe('markup', () => {
     const buttons = ['one', 'two', 'three', 'four', 'five', 'six'];
     const keyboard = Markup.keyboard(buttons);
 
-    expect(keyboard.__keyboard.buttons).to.be.an('array').to.have.length(2);
-    expect(keyboard.__keyboard.buttons[0]).to.be.an('array').to.have.length(4);
-    expect(keyboard.__keyboard.buttons[1]).to.be.an('array').to.have.length(2);
+    expect(keyboard.rawKeyboard.buttons).to.be.an('array').to.have.length(2);
+    expect(keyboard.rawKeyboard.buttons[0]).to.be.an('array').to.have.length(4);
+    expect(keyboard.rawKeyboard.buttons[1]).to.be.an('array').to.have.length(2);
   });
 });

@@ -1,5 +1,5 @@
 import { expect } from 'chai';
-import VkBot from '../lib';
+import { VkBot } from '../lib';
 import { sendRequest } from './config';
 
 const bot = new VkBot({

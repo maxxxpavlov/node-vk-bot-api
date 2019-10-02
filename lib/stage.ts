@@ -22,8 +22,7 @@ class Stage implements StageClass {
         if (!triggers) {
           return false;
         }
-
-        return triggers.some(trigger => (trigger instanceof RegExp ? trigger.test(text) : text.startsWith(trigger)));
+        return triggers.some((trigger: string | RegExp) => (trigger instanceof RegExp ? trigger.test(text) : text.startsWith(trigger)));
       });
 
       if (command) {
@@ -64,7 +63,7 @@ class Stage implements StageClass {
 
       Object.defineProperty(ctx.scene, 'step', {
         get: () => ctx.session.__scene.step,
-        set: (index) => {
+        set: (index: number) => {
           ctx.session.__scene.step = index;
         },
       });
@@ -78,4 +77,4 @@ class Stage implements StageClass {
   }
 }
 
-export default Stage;
+export { Stage };

@@ -13,13 +13,14 @@ interface BotClass {
   settings: Settings;
   callExecute: any;
   command: any;
-  sendMessage;
-  startPolling;
-  getLongPollParams;
-  use;
-  next;
+  sendMessage(userId: number | number[], message?: string | undefined | null,
+    attachment?: string | undefined | null, keyboard?: MarkupClass, sticker?: null | string | undefined): void;
+  startPolling(ts: number): Promise<any>;
+  getLongPollParams(): void;
+  use(middleware: any): void;
+  next(ctx: ContextClass, idx?: number): boolean;
   execute;
-  webhookCallback;
+  webhookCallback(...args: any[]);
 }
 interface ContextClass {
   message: any;
@@ -43,4 +44,13 @@ interface ContextOptions {
   type: string;
   object: any;
 }
-export { Settings, BotClass, ContextClass, SceneClass, StageClass, ContextOptions };
+
+interface MarkupClass {
+  rawKeyboard: any;
+}
+interface ButtonClass {
+  color?: 'default' | 'primary' | 'negative' | 'positive' | string;
+  action?: any;
+  label?: string;
+}
+export { Settings, BotClass, ContextClass, SceneClass, StageClass, ContextOptions, MarkupClass, ButtonClass };

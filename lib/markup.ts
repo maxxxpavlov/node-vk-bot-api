@@ -1,18 +1,12 @@
 const KEYBOARD_COLUMNS_MAX = 4;
 
-interface MarkupClass {
-  __keyboard: any;
-}
-interface ButtonClass {
-  color?: 'default' | 'primary' | 'negative' | 'positive' | string;
-  action?: any;
-  label?: string;
-}
+import { MarkupClass } from './types';
+
 
 class Markup implements MarkupClass {
-  __keyboard: any;
+  rawKeyboard: any;
   keyboard(buttons: any[], options = { columns: KEYBOARD_COLUMNS_MAX }) {
-    this.__keyboard = {
+    this.rawKeyboard = {
       buttons: Array.isArray(buttons[0])
         ? buttons
         : buttons.reduce((array: any[], label: string) => {
@@ -33,13 +27,13 @@ class Markup implements MarkupClass {
   }
 
   oneTime(idOneTime = true) {
-    this.__keyboard.one_time = idOneTime;
+    this.rawKeyboard.one_time = idOneTime;
 
     return this;
   }
 
   toJSON() {
-    return JSON.stringify(this.__keyboard);
+    return JSON.stringify(this.rawKeyboard);
   }
 
   static keyboard(keyboard: any[], options = { columns: KEYBOARD_COLUMNS_MAX }) {
@@ -47,7 +41,7 @@ class Markup implements MarkupClass {
   }
 
   static button(label: string | any[],
-    color: 'default' | 'primary' | 'negative' | 'positive' | string = 'default', payload: any = { button: label }) {
+    color: 'default' | 'primary' | 'negative' | 'positive' = 'default', payload: any = { button: label }) {
     if (typeof label === 'object') {
       return label;
     }
@@ -63,4 +57,4 @@ class Markup implements MarkupClass {
   }
 }
 
-export default Markup;
+export { Markup };

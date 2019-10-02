@@ -1,9 +1,9 @@
 import { expect } from 'chai';
-import VkBot from '../lib/index';
-import Scene from '../lib/scene';
-import Stage from '../lib/stage';
-import Session from '../lib/session';
-import Context from '../lib/context';
+import { VkBot } from '../lib/index';
+import { Scene } from '../lib/scene';
+import { Stage } from '../lib/stage';
+import { Session } from '../lib/session';
+import { Context } from '../lib/context';
 
 const bot = new VkBot('TOKEN');
 

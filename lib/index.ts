@@ -1,8 +1,11 @@
-import toArray from './utils/toArray';
 import { BotClass, Settings, ContextClass } from './types';
 import axios from 'axios';
-import Context from './context';
-import Request from './request';
+import { Context } from './context';
+import { Request } from './request';
+import { toArray } from './utils/toArray';
+import { stringify } from 'querystring';
+import crypto from 'crypto';
+import biguintFormat from 'biguint-format';
 const CONFIRMATION_TYPE = 'confirmation';
 
 class PollingError extends Error { }
@@ -10,11 +13,11 @@ class PollingError extends Error { }
 /*
   Create vk bot instance
 */
+
 class VkBot implements BotClass {
   middlewares: any[];
   methods: any[];
   settings: Settings;
-  getLongPollParams;
   longPollParams: any;
   constructor(userSettings: string | Settings) {
     if (!userSettings) {
@@ -47,9 +50,9 @@ class VkBot implements BotClass {
   }
   async api(method: string, settings = {}) {
     try {
-      const { data } = await axios.post(`https://api.vk.com/method/${method}`, JSON.stringify({
+      const { data } = await axios.post(`https://api.vk.com/method/${method}`, stringify({
         v: 5.101,
-        ...settings,
+        ...settings
       }));
 
       if (data.error) {
@@ -76,6 +79,7 @@ class VkBot implements BotClass {
 
     return this;
   }
+
   execute(method: any, settings: any, callback = () => { }): BotClass {
     this.methods.push({
       callback,
@@ -87,7 +91,7 @@ class VkBot implements BotClass {
     return this;
   }
 
-  private async getLongPollingParams() {
+  async getLongPollParams() {
     if (!this.settings.group_id) {
       const { response } = await this.api('groups.getById', {
         access_token: this.settings.token,
@@ -144,7 +148,8 @@ class VkBot implements BotClass {
     if (Array.isArray(userId) && userId.length > 100) {
       throw new Error('Message can\'t be sent to more than 100 recipients.');
     }
-
+    const seed = biguintFormat(crypto.randomBytes(8), 'dec');
+    const randomId = biguintFormat(seed);
     this.execute(
       'messages.send',
       (<any>Object).assign(
@@ -158,19 +163,19 @@ class VkBot implements BotClass {
             attachment: toArray(attachment).join(','),
             sticker_id: sticker,
             keyboard: keyboard ? keyboard.toJSON() : undefined,
+            random_id: randomId
           },
       ),
     );
   }
 
-  async startPolling(ts?: number): Promise<any> {
+  async startPolling(ts: number = 0): Promise<any> {
     return new Promise(async (resolve, reject) => {
       try {
         if (!this.longPollParams) {
           this.longPollParams = await this.getLongPollParams();
         }
         resolve();
-
         const { data } = await axios.get(this.longPollParams.server, {
           params: {
             ...this.longPollParams,
@@ -178,33 +183,37 @@ class VkBot implements BotClass {
             act: 'a_check',
             wait: this.settings.polling_timeout,
           },
-        }).catch(() => {
+        }).catch((err) => {
           throw new PollingError();
         });
-
         if (data.failed) {
-          throw new PollingError();
+          switch (data.failed) {
+            case 1:
+              return this.startPolling(data.ts);
+            default:
+              throw new PollingError();
+          }
         }
 
-        this.startPolling(data.ts);
-
-        data.updates.forEach((update) => this.next(new Context(update, this)));
+        for (const update of data.updates) {
+          this.next(new Context(update, this));
+        }
+        this.startPolling(data.ts)
       } catch (err) {
         reject(err);
       }
     });
   }
 
-  use(middleware: any) {
+  use(middleware: any): void {
     const idx: number = this.middlewares.length;
 
     this.middlewares.push({
-      fn: (ctx) => middleware(ctx, () => this.next(ctx, idx)),
+      fn: (ctx: ContextClass) => middleware(ctx, () => this.next(ctx, idx)),
     });
   }
 
   webhookCallback(...args: any[]) {
-
     const request = new Request(...args);
     if (
       request.body.type !== CONFIRMATION_TYPE
@@ -242,7 +251,7 @@ class VkBot implements BotClass {
     }
   }
 
-  event(triggers: string | string[], ...middlewares) {
+  event(triggers: string | string[], ...middlewares: any[]) {
     this.command(triggers, ...middlewares);
   }
 
@@ -251,4 +260,4 @@ class VkBot implements BotClass {
   }
 }
 
-export default VkBot;
+export { VkBot };

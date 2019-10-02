@@ -1,4 +1,5 @@
 import { ContextClass } from './types';
+
 interface SessionSettings {
   store?: Map<any, any>;
   key?: string;
@@ -12,21 +13,20 @@ interface SessionClass {
 }
 
 class Session implements SessionClass {
-
   store = new Map();
   key = 'session';
-  getSessionKey = (ctx: any): string => {
-    const userId = ctx.message.from_id || ctx.message.user_id;
-    return `${userId}:${userId}`;
-  }
 
   constructor(settings: SessionSettings = {}) {
     Object.assign(this, {}, settings);
   }
 
+  getSessionKey = (ctx: any): string => {
+    const userId = ctx.message.from_id || ctx.message.user_id;
+    return `${userId}:${userId}`;
+  }
 
   middleware() {
-    return (ctx, next) => {
+    return (ctx: ContextClass, next) => {
       const key = this.getSessionKey(ctx);
       let session = this.store.get(key) || {};
 
@@ -44,4 +44,4 @@ class Session implements SessionClass {
   }
 }
 
-export default Session;
+export { Session };

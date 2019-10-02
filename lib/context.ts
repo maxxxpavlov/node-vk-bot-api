@@ -15,4 +15,4 @@ class Context implements ContextClass {
   }
 }
 
-export default Context;
+export { Context };

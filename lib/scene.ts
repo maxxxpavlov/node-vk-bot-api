@@ -1,4 +1,4 @@
-import toArray from './utils/toArray';
+import { toArray } from './utils/toArray';
 
 import { SceneClass } from './types';
 
@@ -24,4 +24,4 @@ class Scene implements SceneClass {
   }
 }
 
-export default Scene;
+export { Scene };
