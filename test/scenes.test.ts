@@ -1,8 +1,9 @@
-const { expect } = require('chai');
-const VkBot = require('../lib');
-const Scene = require('../lib/scene');
-const Stage = require('../lib/stage');
-const Session = require('../lib/session');
+import { expect } from 'chai';
+import VkBot from '../lib/index';
+import Scene from '../lib/scene';
+import Stage from '../lib/stage';
+import Session from '../lib/session';
+import Context from '../lib/context';
 
 const bot = new VkBot('TOKEN');
 
@@ -71,7 +72,7 @@ describe('scenes', () => {
   describe('e2e', () => {
     const session = new Session();
 
-    const testSceneContext = (ctx, current, step) => {
+    const testSceneContext = (ctx, current?, step?) => {
       expect(ctx).to.be.an('object');
       expect(ctx.scene).to.be.an('object').to.have.all.keys(['enter', 'leave', 'next', 'selectStep']);
       expect(ctx.scene.enter).to.be.a('function');
@@ -102,12 +103,11 @@ describe('scenes', () => {
         done();
       });
 
-      bot.next({
-        message: {
-          type: 'message_new',
-          text: 'Hello!',
-        },
-      });
+      bot.next(new Context({
+        type: 'message_new',
+        object: { text: 'Hello!' }
+
+      }, bot));
     });
 
     it('should run scene', (done) => {
@@ -119,12 +119,11 @@ describe('scenes', () => {
 
           ctx.scene.next();
 
-          bot.next({
-            message: {
-              type: 'message_new',
-              text: 'next',
-            },
-          });
+          bot.next(new Context({
+            type: 'message_new',
+            object: { text: 'next' }
+
+          }, bot));
         },
         (ctx) => {
           testSceneContext(ctx, 'test', 1);
@@ -146,12 +145,11 @@ describe('scenes', () => {
         ctx.scene.enter('test');
       });
 
-      bot.next({
-        message: {
-          type: 'message_new',
-          text: 'go',
-        },
-      });
+      bot.next(new Context({
+        type: 'message_new',
+        object: { text: 'go' }
+
+      }, bot));
     });
 
     it('should trigger command in scene', (done) => {
@@ -163,12 +161,11 @@ describe('scenes', () => {
 
           ctx.scene.next();
 
-          bot.next({
-            message: {
-              type: 'message_new',
-              text: '/cancel',
-            },
-          });
+          bot.next(new Context({
+            type: 'message_new',
+            object: { text: '/cancel' }
+
+          }, bot));
         },
         (ctx) => {
           ctx.scene.leave();
@@ -196,12 +193,11 @@ describe('scenes', () => {
         ctx.scene.enter('test');
       });
 
-      bot.next({
-        message: {
-          type: 'message_new',
-          text: 'go',
-        },
-      });
+      bot.next(new Context({
+        type: 'message_new',
+        object: { text: 'go' }
+
+      }, bot));
     });
 
     it('should get and step scene step', (done) => {
@@ -230,12 +226,11 @@ describe('scenes', () => {
         ctx.scene.enter('test');
       });
 
-      bot.next({
-        message: {
-          type: 'message_new',
-          text: 'go',
-        },
-      });
+      bot.next(new Context({
+        type: 'message_new',
+        object: { text: 'go' }
+
+      }, bot));
     });
   });
 });

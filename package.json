@@ -4,13 +4,10 @@
   "description": "🤖 VK bot framework for Node.js, based on Bots Long Poll API and Callback API",
   "main": "lib/index.js",
   "scripts": {
-    "test": "mocha --exit --timeout 5000",
-    "eslint": "eslint .",
-    "eslint:fix": "eslint . --fix"
+    "test": "set TS_NODE_COMPILER_OPTIONS={\"module\":\"commonjs\", \"target\": \"es6\"} && mocha -r ts-node/register test/**.ts --project lib/tsconfig.json --timeout 5000"
   },
   "repository": {
-    "type": "git",
-    "url": "git+https://github.com/node-vk-bot-api/node-vk-bot-api.git"
+    "type": "git"
   },
   "keywords": [
     "vk",
@@ -40,7 +37,14 @@
   },
   "homepage": "https://github.com/node-vk-bot-api/node-vk-bot-api#readme",
   "dependencies": {
-    "axios": "^0.17.1"
+    "@types/chai": "^4.2.3",
+    "@types/mocha": "^5.2.7",
+    "axios": "^0.17.1",
+    "ts-node": "^8.4.1",
+    "tslint": "^5.20.0",
+    "tslint-config-airbnb": "^5.11.2",
+    "typings": "^2.1.1",
+    "vk-io": "^4.0.0-rc.20"
   },
   "directories": {
     "example": "examples"
@@ -54,6 +58,6 @@
     "eslint": "^5.9.0",
     "eslint-config-airbnb-base": "^13.0.0",
     "eslint-plugin-import": "^2.13.0",
-    "mocha": "^5.2.0"
+    "mocha": "^6.2.0"
   }
 }

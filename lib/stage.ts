@@ -1,13 +1,19 @@
-class Stage {
-  constructor(...scenes) {
+import { ContextClass, SceneClass, StageClass } from './types';
+
+class Stage implements StageClass {
+  scenes: any;
+  constructor(...scenes: SceneClass[]) {
     this.scenes = {};
 
     scenes.forEach(({ name, middlewares }) => {
       this.scenes[name] = middlewares;
     });
+    for (const { name, middlewares } of scenes) {
+      this.scenes[name] = middlewares;
+    }
   }
 
-  enter(ctx) {
+  enter(ctx: ContextClass) {
     const { current, step } = ctx.session.__scene;
 
     if (ctx.message.text || ctx.message.body) {
@@ -35,12 +41,12 @@ class Stage {
   }
 
   middleware() {
-    return (ctx, next) => {
+    return (ctx: ContextClass, next) => {
       ctx.scene = {
-        enter: (name, step = 0) => {
+        enter: (name: string, step = 0) => {
           ctx.session.__scene = {
-            current: name,
             step,
+            current: name,
           };
 
           this.enter(ctx);
@@ -49,9 +55,9 @@ class Stage {
           ctx.session.__scene = null;
         },
         next: () => {
-          ++ctx.session.__scene.step;
+          ctx.session.__scene.step += 1;
         },
-        selectStep: (index) => {
+        selectStep: (index: number) => {
           ctx.session.__scene.step = index;
         },
       };
@@ -72,4 +78,4 @@ class Stage {
   }
 }
 
-module.exports = Stage;
+export default Stage;

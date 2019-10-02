@@ -1,7 +1,11 @@
 class Request {
+  private request: any;
+  private response: any;
+
   constructor(...args) {
     // if passed 3 args, than it's express (req, res, next)
     // else koa (ctx, next)
+
     if (args.length === 3) {
       this.request = args[0];
       this.response = args[1];
@@ -20,4 +24,4 @@ class Request {
   }
 }
 
-module.exports = Request;
+export default Request;

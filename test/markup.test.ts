@@ -1,5 +1,5 @@
-const { expect } = require('chai');
-const Markup = require('../lib/markup');
+import { expect } from 'chai';
+import Markup from '../lib/markup';
 
 describe('markup', () => {
   const test = (keyboard, oneTime, buttons) => {

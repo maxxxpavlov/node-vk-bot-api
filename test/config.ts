@@ -1,16 +1,16 @@
 const sendRequestViaKoa = (ctx, middleware) => {
-  middleware(ctx, () => {});
+  middleware.webhookCallback(ctx, () => { });
 
   return ctx;
 };
 
 const sendRequestViaExpress = (ctx, middleware) => {
-  middleware(ctx.req, ctx.res, () => {});
+  middleware.webhookCallback(ctx.req, ctx.res, () => { });
 
   return ctx;
 };
 
-module.exports.sendRequest = (type, body, middleware) => {
+const sendRequest = (type, body, middleware) => {
   const ctx = {
     req: { body },
     request: { body },
@@ -18,6 +18,7 @@ module.exports.sendRequest = (type, body, middleware) => {
       end: (body) => {
         ctx.res.body = body;
       },
+      body: null
     },
   };
 
@@ -25,3 +26,5 @@ module.exports.sendRequest = (type, body, middleware) => {
     ? sendRequestViaKoa(ctx, middleware)
     : sendRequestViaExpress(ctx, middleware);
 };
+
+export { sendRequest };

@@ -1,6 +1,6 @@
-const { expect } = require('chai');
-const VkBot = require('../lib');
-const { sendRequest } = require('./config');
+import { expect } from 'chai';
+import VkBot from '../lib';
+import { sendRequest } from './config';
 
 const bot = new VkBot({
   token: 'TOKEN',
@@ -21,7 +21,7 @@ describe('webhooks', () => {
         {
           type: 'confirmation',
         },
-        bot.webhookCallback,
+        bot,
       );
 
       expect(res.body).to.be.equal(bot.settings.confirmation);
@@ -33,7 +33,7 @@ describe('webhooks', () => {
         {
           type: 'confirmation',
         },
-        bot.webhookCallback,
+        bot,
       );
 
       expect(res.body).to.be.equal(bot.settings.confirmation);
@@ -45,7 +45,7 @@ describe('webhooks', () => {
         {
           type: 'message_new',
         },
-        bot.webhookCallback,
+        bot,
       );
 
       expect(res.body).to.be.equal('ok');
@@ -57,7 +57,7 @@ describe('webhooks', () => {
         {
           type: 'message_new',
         },
-        bot.webhookCallback,
+        bot,
       );
 
       expect(res.body).to.be.equal('ok');
@@ -72,7 +72,7 @@ describe('webhooks', () => {
         {
           type: 'message_new',
         },
-        bot.webhookCallback,
+        bot,
       );
 
       expect(res.body).to.be.not.equal('ok');
@@ -84,7 +84,7 @@ describe('webhooks', () => {
         {
           type: 'message_new',
         },
-        bot.webhookCallback,
+        bot,
       );
 
       expect(res.body).to.be.not.equal('ok');
@@ -97,7 +97,7 @@ describe('webhooks', () => {
           type: 'message_new',
           secret: bot.settings.secret,
         },
-        bot.webhookCallback,
+        bot,
       );
 
       expect(res.body).to.be.equal('ok');
@@ -110,7 +110,7 @@ describe('webhooks', () => {
           type: 'message_new',
           secret: bot.settings.secret,
         },
-        bot.webhookCallback,
+        bot,
       );
 
       expect(res.body).to.be.equal('ok');

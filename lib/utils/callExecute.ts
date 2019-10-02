@@ -1,6 +1,6 @@
-const api = require('../api');
+import api from '../api';
 
-module.exports = function (methods) {
+export default (methods: any[]) => {
   for (let i = 0, j = Math.ceil(methods.length / 25); i < j; i++) {
     const slicedMethods = methods.slice(i * 25, i * 25 + 25);
 
