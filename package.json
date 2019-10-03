@@ -1,6 +1,6 @@
 {
   "name": "nodejs-vk-bot",
-  "version": "2.4.12",
+  "version": "2.4.13",
   "description": "🤖 VK bot framework for Node.js, based on Bots Long Poll API and Callback API. TypeScript version ",
   "main": "lib/index.js",
   "scripts": {
@@ -42,8 +42,7 @@
     "axios": "^0.19.0",
     "biguint-format": "^1.0.1",
     "crypto": "^1.0.1",
-    "querystring": "^0.2.0",
-    "vk-io": "^4.0.0-rc.20"
+    "querystring": "^0.2.0"
   },
   "directories": {
     "example": "examples"
@@ -63,7 +62,6 @@
     "ts-node": "^8.4.1",
     "tslint": "^5.20.0",
     "tslint-config-airbnb": "^5.11.2",
-    "typescript": "^3.6.3",
-    "typings": "^2.1.1"
+    "typescript": "^3.6.3"
   }
 }
