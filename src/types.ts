@@ -6,6 +6,8 @@ interface Settings {
   confirmation?: string;
   secret?: string;
 }
+type Next = (ctx: ContextClass, idx: number) => boolean;
+type Middleware = (ctx: ContextClass, next: Next) => any;
 
 interface BotClass {
   middlewares: any[];
@@ -18,7 +20,7 @@ interface BotClass {
   startPolling(ts: number): Promise<any>;
   getLongPollParams(): void;
   use(middleware: any): void;
-  next(ctx: ContextClass, idx?: number): boolean;
+  next: Next;
   execute;
   webhookCallback(...args: any[]);
 }
@@ -47,6 +49,8 @@ interface ContextOptions {
 
 interface MarkupClass {
   rawKeyboard: any;
+  toJSON(): string;
+  oneTime(idOneTime: boolean);
 }
 interface ButtonClass {
   color?: 'default' | 'primary' | 'negative' | 'positive' | string;
@@ -54,4 +58,4 @@ interface ButtonClass {
   label?: string;
 }
 
-export { Settings, BotClass, ContextClass, SceneClass, StageClass, ContextOptions, MarkupClass, ButtonClass };
+export { Settings, BotClass, ContextClass, SceneClass, StageClass, ContextOptions, MarkupClass, ButtonClass, Middleware };

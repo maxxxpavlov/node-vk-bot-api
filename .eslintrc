@@ -1,0 +1,12 @@
+{
+    "extends": ["eslint-config-airbnb-typescript"],
+    "env": {
+        "es6": true,
+        "node": true
+    },
+    "parserOptions": {
+        "ecmaVersion": 2019,
+        "sourceType": "module",
+        "project": "./tsconfig.json"
+    }
+}

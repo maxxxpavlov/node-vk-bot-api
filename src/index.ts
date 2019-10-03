@@ -1,11 +1,11 @@
-import { BotClass, Settings, ContextClass } from './types';
+import { BotClass, Settings, ContextClass, MarkupClass, Middleware } from './types';
 import axios from 'axios';
+import crypto from 'crypto';
+import { stringify } from 'querystring';
+import biguintFormat from 'biguint-format';
 import { Context } from './context';
 import { Request } from './request';
 import { toArray } from './utils/toArray';
-import { stringify } from 'querystring';
-import crypto from 'crypto';
-import biguintFormat from 'biguint-format';
 const CONFIRMATION_TYPE = 'confirmation';
 
 class PollingError extends Error { }
@@ -13,12 +13,12 @@ class PollingError extends Error { }
 /*
   Create vk bot instance
 */
-
 class VkBot implements BotClass {
   middlewares: any[];
   methods: any[];
   settings: Settings;
   longPollParams: any;
+
   constructor(userSettings: string | Settings) {
     if (!userSettings) {
       throw new Error('You must pass token into settings');
@@ -48,6 +48,7 @@ class VkBot implements BotClass {
       this.methods = [];
     }, this.settings.execute_timeout);
   }
+
   async api(method: string, settings = {}) {
     try {
       const { data } = await axios.post(`https://api.vk.com/method/${method}`, stringify({
@@ -143,7 +144,7 @@ class VkBot implements BotClass {
   }
 
   sendMessage(userId: number | number[], message: string | undefined | null = null,
-    attachment: string | undefined | null = null, keyboard: any, sticker: null | string | undefined = null) {
+    attachment: string | undefined | null = null, keyboard: null | MarkupClass = null, sticker: null | string | undefined = null) {
 
     if (Array.isArray(userId) && userId.length > 100) {
       throw new Error('Message can\'t be sent to more than 100 recipients.');
@@ -152,7 +153,7 @@ class VkBot implements BotClass {
     const randomId = biguintFormat(seed);
     this.execute(
       'messages.send',
-      (<any>Object).assign(
+      Object.assign(
         Array.isArray(userId)
           ? { user_ids: userId.join(',') }
           : { peer_id: userId },
@@ -198,14 +199,14 @@ class VkBot implements BotClass {
         for (const update of data.updates) {
           this.next(new Context(update, this));
         }
-        this.startPolling(data.ts)
+        this.startPolling(data.ts);
       } catch (err) {
         reject(err);
       }
     });
   }
 
-  use(middleware: any): void {
+  use(middleware: Middleware): void {
     const idx: number = this.middlewares.length;
 
     this.middlewares.push({

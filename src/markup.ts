@@ -28,7 +28,6 @@ class Markup implements MarkupClass {
 
   oneTime(idOneTime = true) {
     this.rawKeyboard.one_time = idOneTime;
-
     return this;
   }
 
