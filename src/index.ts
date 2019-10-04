@@ -6,6 +6,11 @@ import biguintFormat from 'biguint-format';
 import { Context } from './context';
 import { Request } from './request';
 import { toArray } from './utils/toArray';
+import { Markup } from './markup';
+import { Scene } from './scene';
+import { Session } from './session';
+import { Stage } from './stage';
+
 const CONFIRMATION_TYPE = 'confirmation';
 
 class PollingError extends Error { }
@@ -261,4 +266,4 @@ class VkBot implements BotClass {
   }
 }
 
-export { VkBot };
+export { VkBot, Context, Markup, Session, Request, Stage, Scene };
