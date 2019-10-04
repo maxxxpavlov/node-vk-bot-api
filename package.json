@@ -1,6 +1,6 @@
 {
   "name": "nodejs-vk-bot",
-  "version": "2.4.19",
+  "version": "2.4.20",
   "description": "🤖 VK bot framework for Node.js, based on Bots Long Poll API and Callback API. TypeScript version ",
   "main": "lib/index.js",
   "files": [
@@ -14,7 +14,7 @@
     "type": "git",
     "url": "https://github.com/maxxxpavlov/node-vk-bot-api"
   },
-  "types": "./lib/types.d.ts",
+  "types": "lib/indextypes.d.ts",
   "keywords": [
     "vk",
     "bots",
