@@ -1,8 +1,6 @@
 import { BotClass, Settings, ContextClass, MarkupClass, Middleware } from './types';
 import axios from 'axios';
-import crypto from 'crypto';
 import { stringify } from 'querystring';
-import biguintFormat from 'biguint-format';
 import { Context } from './context';
 import { Request } from './request';
 import { toArray } from './utils/toArray';
@@ -18,12 +16,13 @@ class PollingError extends Error { }
 /*
   Create vk bot instance
 */
-class VkBot implements BotClass {
+type pollHandler = (ts: number) => any;
+class VkBot {
   middlewares: any[];
   methods: any[];
   settings: Settings;
   longPollParams: any;
-
+  pollingMiddlewares: pollHandler[] = [];
   constructor(userSettings: string | Settings) {
     if (!userSettings) {
       throw new Error('You must pass token into settings');
@@ -154,8 +153,7 @@ class VkBot implements BotClass {
     if (Array.isArray(userId) && userId.length > 100) {
       throw new Error('Message can\'t be sent to more than 100 recipients.');
     }
-    const seed = biguintFormat(crypto.randomBytes(8), 'dec');
-    const randomId = biguintFormat(seed);
+    const randomId = Math.random() * (1000000000 - 9) + 10;
     this.execute(
       'messages.send',
       Object.assign(
@@ -174,7 +172,9 @@ class VkBot implements BotClass {
       ),
     );
   }
-
+  onPoll(handler: pollHandler) {
+    this.pollingMiddlewares.push(handler);
+  }
   async startPolling(ts: number = 0): Promise<any> {
     return new Promise(async (resolve, reject) => {
       try {
@@ -196,11 +196,17 @@ class VkBot implements BotClass {
           switch (data.failed) {
             case 1:
               return this.startPolling(data.ts);
+            case 2:
+            case 3:
+              this.longPollParams = null;
+              return this.startPolling();
             default:
               throw new PollingError();
           }
         }
-
+        for (const handler of this.pollingMiddlewares) {
+          handler(data.ts);
+        }
         for (const update of data.updates) {
           this.next(new Context(update, this));
         }
@@ -266,4 +272,4 @@ class VkBot implements BotClass {
   }
 }
 
-export { VkBot, Context, Markup, Session, Request, Stage, Scene };
+export { VkBot, Context, Markup, Session, Request, Stage, Scene, BotClass, Settings, ContextClass, MarkupClass, Middleware };

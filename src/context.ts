@@ -1,7 +1,7 @@
-import { ContextClass, BotClass, ContextOptions } from './types';
+import { BotClass, ContextOptions } from './types';
 
 
-class Context implements ContextClass {
+class Context {
   message: any;
   bot: BotClass;
 

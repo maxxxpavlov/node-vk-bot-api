@@ -62,6 +62,7 @@ describe('markup', () => {
     ];
 
     const keyboard = Markup.keyboard(
+      // @ts-ignore
       buttons.map(item => Markup.button(item.label, item.color, item.payload)),
     );
 

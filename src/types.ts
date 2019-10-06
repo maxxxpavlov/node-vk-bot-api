@@ -6,7 +6,7 @@ interface Settings {
   confirmation?: string;
   secret?: string;
 }
-type Next = (ctx: ContextClass, idx: number) => boolean;
+type Next = (ctx?: ContextClass, idx?: number) => boolean;
 type Middleware = (ctx: ContextClass, next: Next) => any;
 
 interface BotClass {
@@ -19,10 +19,11 @@ interface BotClass {
     attachment?: string | undefined | null, keyboard?: MarkupClass, sticker?: null | string | undefined): void;
   startPolling(ts: number): Promise<any>;
   getLongPollParams(): void;
-  use(middleware: any): void;
-  next: Next;
+  use;
+  next;
   execute;
   webhookCallback(...args: any[]);
+  on;
 }
 interface ContextClass {
   message: any;
