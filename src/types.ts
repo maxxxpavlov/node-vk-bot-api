@@ -8,6 +8,7 @@ interface Settings {
 }
 type Next = (ctx?: ContextClass, idx?: number) => boolean;
 type Middleware = (ctx: ContextClass, next: Next) => any;
+type pollHandler = (ts: number) => any;
 
 interface BotClass {
   middlewares: any[];
@@ -59,4 +60,4 @@ interface ButtonClass {
   label?: string;
 }
 
-export { Settings, BotClass, ContextClass, SceneClass, StageClass, ContextOptions, MarkupClass, ButtonClass, Middleware };
+export { Settings, BotClass, ContextClass, SceneClass, StageClass, ContextOptions, MarkupClass, ButtonClass, Middleware, pollHandler };
