@@ -4,3 +4,5 @@ config.js
 !test/config.js
 realTest
 lib
+.lock
+.log

@@ -131,7 +131,7 @@ class VkBot {
               return trigger.test(message);
             }
 
-            return message.startsWith(trigger);
+            return message === trigger;
           }
 
           return ctx.message.type === trigger;

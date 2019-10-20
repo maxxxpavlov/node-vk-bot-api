@@ -1,11 +1,11 @@
 Arguments: 
-  C:\Program Files\nodejs\node.exe C:\Program Files (x86)\Yarn\bin\yarn.js publish
+  C:\Program Files\nodejs\node.exe C:\Users\M4k5y\AppData\Roaming\npm\node_modules\yarn\bin\yarn.js publish
 
 PATH: 
-  C:\ProgramData\DockerDesktop\version-bin;C:\Program Files\Docker\Docker\Resources\bin;C:\Program Files (x86)\Common Files\Oracle\Java\javapath;C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v10.1\bin;C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v10.1\libnvvp;C:\Users\M4k5y\AppData\Local\Programs\Python\Python37\;C:\Users\M4k5y\AppData\Local\Programs\Python\Python37\Scripts\;C:\WINDOWS\system32;C:\WINDOWS;C:\WINDOWS\System32\Wbem;C:\WINDOWS\System32\WindowsPowerShell\v1.0\;C:\WINDOWS\System32\OpenSSH\;C:\ProgramData\chocolatey\bin;C:\Program Files\Git\cmd;C:\Program Files (x86)\NVIDIA Corporation\PhysX\Common;C:\Program Files\PuTTY\;C:\Program Files\NVIDIA Corporation\Nsight Compute 2019.3.0\;C:\Program Files\dotnet\;C:\Program Files\Microsoft SQL Server\130\Tools\Binn\;C:\Program Files\Microsoft SQL Server\Client SDK\ODBC\170\Tools\Binn\;C:\Users\M4k5y\AppData\Local\Microsoft\WindowsApps;C:\Users\M4k5y\AppData\Roaming\npm;C:\Users\M4k5y\AppData\Local\atom\bin;C:\Program Files\nodejs\;C:\Users\M4k5y\bin\php;C:\Program Files (x86)\Yarn\bin\;C:\WINDOWS\system32;C:\WINDOWS;C:\WINDOWS\System32\Wbem;C:\WINDOWS\System32\WindowsPowerShell\v1.0\;C:\WINDOWS\System32\OpenSSH\;C:\Users\M4k5y\AppData\Local\Programs\Python\Python37\Scripts\;C:\Users\M4k5y\AppData\Local\Programs\Python\Python37\;C:\Users\M4k5y\AppData\Local\Microsoft\WindowsApps;C:\Users\M4k5y\AppData\Local\atom\bin;C:\Users\M4k5y\AppData\Roaming\npm;C:\Users\M4k5y\AppData\Local\Programs\Microsoft VS Code\bin;C:\Users\M4k5y\AppData\Local\Google\Cloud SDK\google-cloud-sdk\bin;C:\Users\M4k5y\AppData\Local\Yarn\bin;C:\Users\M4k5y\AppData\Local\GitHubDesktop\bin;C:\Program Files (x86)\Nmap;C:\Users\M4k5y\AppData\Local\Microsoft\WindowsApps;
+  C:\Python27\;C:\Python27\Scripts;C:\ProgramData\DockerDesktop\version-bin;C:\Program Files\Docker\Docker\Resources\bin;C:\Program Files (x86)\Common Files\Oracle\Java\javapath;C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v10.1\bin;C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA\v10.1\libnvvp;C:\Users\M4k5y\AppData\Local\Programs\Python\Python37\;C:\Users\M4k5y\AppData\Local\Programs\Python\Python37\Scripts\;C:\WINDOWS\system32;C:\WINDOWS;C:\WINDOWS\System32\Wbem;C:\WINDOWS\System32\WindowsPowerShell\v1.0\;C:\WINDOWS\System32\OpenSSH\;C:\ProgramData\chocolatey\bin;C:\Program Files\Git\cmd;C:\Program Files (x86)\NVIDIA Corporation\PhysX\Common;C:\Program Files\PuTTY\;C:\Program Files\NVIDIA Corporation\Nsight Compute 2019.3.0\;C:\Program Files\dotnet\;C:\Program Files\Microsoft SQL Server\130\Tools\Binn\;C:\Program Files\Microsoft SQL Server\Client SDK\ODBC\170\Tools\Binn\;C:\Users\M4k5y\AppData\Local\Microsoft\WindowsApps;C:\Users\M4k5y\AppData\Roaming\npm;C:\Users\M4k5y\AppData\Local\atom\bin;C:\Program Files\nodejs\;C:\Users\M4k5y\bin\php;C:\Program Files (x86)\Yarn\bin\;C:\WINDOWS\system32;C:\WINDOWS;C:\WINDOWS\System32\Wbem;C:\WINDOWS\System32\WindowsPowerShell\v1.0\;C:\WINDOWS\System32\OpenSSH\;C:\Users\M4k5y\AppData\Local\Programs\Python\Python37\Scripts\;C:\Users\M4k5y\AppData\Local\Programs\Python\Python37\;C:\Users\M4k5y\AppData\Local\Microsoft\WindowsApps;C:\Users\M4k5y\AppData\Local\atom\bin;C:\Users\M4k5y\AppData\Roaming\npm;C:\Users\M4k5y\AppData\Local\Programs\Microsoft VS Code\bin;C:\Users\M4k5y\AppData\Local\Google\Cloud SDK\google-cloud-sdk\bin;C:\Users\M4k5y\AppData\Local\Yarn\bin;C:\Users\M4k5y\AppData\Local\GitHubDesktop\bin;C:\Program Files (x86)\Nmap;C:\Users\M4k5y\AppData\Local\Microsoft\WindowsApps;C:\Users\M4k5y\yandex-cloud\bin;C:\Program Files\MongoDB\Server\4.2\bin;
 
 Yarn version: 
-  1.17.3
+  1.19.1
 
 Node version: 
   12.8.0
@@ -15,7 +15,7 @@ Platform:
 
 Trace: 
   Error: canceled
-      at Interface.<anonymous> (C:\Program Files (x86)\Yarn\lib\cli.js:136724:13)
+      at Interface.<anonymous> (C:\Users\M4k5y\AppData\Roaming\npm\node_modules\yarn\lib\cli.js:136824:13)
       at Interface.emit (events.js:203:13)
       at Interface._ttyWrite (readline.js:880:16)
       at ReadStream.onkeypress (readline.js:191:10)
@@ -29,7 +29,7 @@ Trace:
 npm manifest: 
   {
     "name": "nodejs-vk-bot",
-    "version": "2.4.19",
+    "version": "2.4.30",
     "description": "🤖 VK bot framework for Node.js, based on Bots Long Poll API and Callback API. TypeScript version ",
     "main": "lib/index.js",
     "files": [
@@ -43,7 +43,7 @@ npm manifest:
       "type": "git",
       "url": "https://github.com/maxxxpavlov/node-vk-bot-api"
     },
-    "types": "./lib/types.d.ts",
+    "types": "lib/index.d.ts",
     "keywords": [
       "vk",
       "bots",
