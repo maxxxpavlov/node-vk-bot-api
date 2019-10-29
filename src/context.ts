@@ -4,9 +4,14 @@ import { BotClass, ContextOptions } from './types';
 class Context {
   message: any;
   bot: BotClass;
-
+  client_info: any;
   constructor({ type, object: update }: ContextOptions, bot: BotClass) {
-    this.message = { ...update, type };
+    if (type === 'message_new' && 'client_info' in update) {
+      this.message = { type, message: update.mesage, ...update };
+      this.client_info = update.client_info;
+    } else {
+      this.message = { ...update, type };
+    }
     this.bot = bot;
   }
 

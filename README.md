@@ -131,8 +131,8 @@ ts is timestamp of the last event you can get events after
 ts is not required
 
 ```typescript
-bot.startPolling().then() => {
-  console.log('Bot started.');
+bot.startPolling().then(() => {
+  console.log("Bot started.");
 });
 ```
 
