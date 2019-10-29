@@ -12,7 +12,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/maxxxpavlov/node-vk-bot-api"
+    "url": "https://github.com/maxxxpavlov/nodejs-vk-bot"
   },
   "types": "lib/index.d.ts",
   "keywords": [
@@ -39,9 +39,9 @@
   "author": "Mikhail Semin",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/maxxxpavlov/node-vk-bot-api/issues"
+    "url": "https://github.com/maxxxpavlov/nodejs-vk-bot/issues"
   },
-  "homepage": "https://github.com/maxxxpavlov/node-vk-bot-api#readme",
+  "homepage": "https://github.com/maxxxpavlov/nodejs-vk-bot#readme",
   "dependencies": {
     "axios": "^0.19.0",
     "biguint-format": "^1.0.1",

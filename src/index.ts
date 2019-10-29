@@ -57,7 +57,7 @@ class VkBot {
   api(method: string, settings = {}): Promise<any> {
     return new Promise((resolve, reject) => {
       axios.post(`https://api.vk.com/method/${method}`, stringify({
-        v: 5.101,
+        v: 5.103,
         ...settings
       })).then(({ data }) => {
         if (data.error) {
