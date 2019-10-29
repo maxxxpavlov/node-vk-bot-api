@@ -1,6 +1,6 @@
 const KEYBOARD_COLUMNS_MAX = 4;
 
-import { MarkupClass } from './types';
+import { MarkupClass, ButtonColor } from './types';
 
 
 class Markup implements MarkupClass {
@@ -26,8 +26,12 @@ class Markup implements MarkupClass {
     return this;
   }
 
-  oneTime(idOneTime = true) {
-    this.rawKeyboard.one_time = idOneTime;
+  oneTime(isOneTime = true) {
+    this.rawKeyboard.one_time = isOneTime;
+    return this;
+  }
+  inline(isInline = true) {
+    this.rawKeyboard.inline = isInline;
     return this;
   }
 
@@ -40,7 +44,7 @@ class Markup implements MarkupClass {
   }
 
   static button(label: string | any[],
-    color: 'default' | 'primary' | 'negative' | 'positive' = 'default', payload: any = { button: label }) {
+    color: ButtonColor = 'default', payload: any = { button: label }) {
     if (typeof label === 'object') {
       return label;
     }

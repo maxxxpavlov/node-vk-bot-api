@@ -54,10 +54,24 @@ interface MarkupClass {
   toJSON(): string;
   oneTime(idOneTime: boolean);
 }
+type ButtonColor = 'default' | 'primary' | 'negative' | 'positive';
+
 interface ButtonClass {
-  color?: 'default' | 'primary' | 'negative' | 'positive' | string;
+  color?: ButtonColor | null | undefined;
   action?: any;
   label?: string;
 }
 
-export { Settings, BotClass, ContextClass, SceneClass, StageClass, ContextOptions, MarkupClass, ButtonClass, Middleware, pollHandler };
+export {
+  Settings,
+  BotClass,
+  ContextClass,
+  SceneClass,
+  StageClass,
+  ContextOptions,
+  MarkupClass,
+  ButtonClass,
+  Middleware,
+  pollHandler,
+  ButtonColor
+};

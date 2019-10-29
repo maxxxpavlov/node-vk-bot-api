@@ -1,62 +1,32 @@
-[![nodejs-vk-bot](https://img.shields.io/npm/v/nodejs-vk-bot.svg?style=flat-square)](https://www.npmjs.com/package/nodejs-vk-bot/)
-![nodejs-vk-bot](https://img.shields.io/badge/code%20style-airbnb-brightgreen.svg?style=flat-square)
-![nodejs-vk-bot](https://img.shields.io/travis/nodejs-vk-bot/nodejs-vk-bot.svg?branch=master&style=flat-square)
-
 # nodejs-vk-bot
 
-🤖 VK bot framework for Node.js, based on [Bots Long Poll API](https://vk.com/dev/bots_longpoll) and [Callback API](https://vk.com/dev.php?method=callback_api).
+🤖 VK bot framework for Node.js, based on [Bots Long Poll API](https://vk.com/dev/bots_longpoll) and [Callback API](https://vk.com/dev.php?method=callback_api). forked from [node-vk-bot-api](https://github.com/node-vk-bot-api/node-vk-bot-api)
 
 ## Install
 
 ```sh
-$ npm i nodejs-vk-bot -S
+$ npm i nodejs-vk-bot
 ```
 
 ## Usage
 
-```javascript
-const VkBot = require("nodejs-vk-bot");
+```typescript
+import { VkBot } from "nodejs-vk-bot";
 
-const bot = new VkBot(process.env.TOKEN);
+const bot = new VkBot("TOKEN");
 
 bot.command("/start", ctx => {
   ctx.reply("Hello!");
 });
 
-bot.startPolling();
-```
-
-## Webhooks
-
-```javascript
-const express = require("express");
-const bodyParser = require("body-parser");
-const VkBot = require("nodejs-vk-bot");
-
-const app = express();
-const bot = new VkBot({
-  token: process.env.TOKEN,
-  confirmation: process.env.CONFIRMATION
+bot.startPolling().then(() => {
+  console.log("Long polling started");
 });
-
-bot.on(ctx => {
-  ctx.reply("Hello!");
-});
-
-app.use(bodyParser.json());
-
-app.post("/", bot.webhookCallback);
-
-app.listen(process.env.PORT);
 ```
 
 ## Examples
 
 [There's a few simple examples.](/examples)
-
-## Community support
-
-Any questions you can ask in the [telegram chat](https://tele.click/joinchat/BXuo0kxMRNVyfdKKjMHpQQ). [russian/english]
 
 ## Tests
 
@@ -71,6 +41,7 @@ $ npm test
 - [.command(triggers, ...middlewares)](#commandtriggers-middlewares)
 - [.event(triggers, ...middlewares)](#eventtriggers-middlewares)
 - [.on(...middlewares)](#onmiddlewares)
+- [.onPoll(handler)](#onpoll)
 - [.sendMessage(userId, message, attachment, keyboard, sticker)](#sendmessageuserid-message-attachment-keyboard-sticker)
 - [.startPolling([callback])](#startpollingcallback)
 - [.webhookCallback(...args)](#webhookcallbackargs)
@@ -79,20 +50,16 @@ $ npm test
 
 Create bot.
 
-```javascript
+```typescript
 // Simple usage
-const bot = new VkBot(process.env.TOKEN);
+const bot = new VkBot("TOKEN");
 
 // Advanced usage
 const bot = new VkBot({
   token: process.env.TOKEN,
   group_id: process.env.GROUP_ID,
   execute_timeout: process.env.EXECUTE_TIMEOUT, // in ms   (50 by default)
-  polling_timeout: process.env.POLLING_TIMEOUT, // in secs (25 by default)
-
-  // webhooks options only
-  secret: process.env.SECRET, // secret key (optional)
-  confirmation: process.env.CONFIRMATION // confirmation string
+  polling_timeout: process.env.POLLING_TIMEOUT // in secs (25 by default)
 });
 ```
 
@@ -100,7 +67,7 @@ const bot = new VkBot({
 
 Add simple middleware.
 
-```javascript
+```typescript
 bot.use((ctx, next) => {
   ctx.message.timestamp = new Date().getTime();
 
@@ -112,7 +79,7 @@ bot.use((ctx, next) => {
 
 Add middlewares with triggers for `message_new` event.
 
-```javascript
+```typescript
 bot.command("start", ctx => {
   ctx.reply("Hello!");
 });
@@ -122,7 +89,7 @@ bot.command("start", ctx => {
 
 Add middlewares with triggers for selected events.
 
-```javascript
+```typescript
 bot.event("message_edit", ctx => {
   ctx.reply("Your message was editted");
 });
@@ -132,7 +99,7 @@ bot.event("message_edit", ctx => {
 
 Add reserved middlewares without triggers.
 
-```javascript
+```typescript
 bot.on(ctx => {
   ctx.reply("No commands for you.");
 });
@@ -142,7 +109,7 @@ bot.on(ctx => {
 
 Send message to user.
 
-```javascript
+```typescript
 // Simple usage
 bot.sendMessage(145003487, "Hello!", "photo1_1");
 
@@ -157,26 +124,16 @@ bot.sendMessage(145003487, {
 });
 ```
 
-### .startPolling([callback])
+### .startPolling(ts): Promise<void>
 
-Start polling with optional callback.
+Start polling, resolves promise when pollling started
+ts is timestamp of the last event you can get events after
+ts is not required
 
-```js
-bot.startPolling(() => {
-  console.log("Bot started.");
+```typescript
+bot.startPolling().then() => {
+  console.log('Bot started.');
 });
-```
-
-### .webhookCallback(...args)
-
-Get webhook callback.
-
-```js
-// express
-bot.webhookCallback(req, res, next);
-
-// koa
-bot.webhookCallback(ctx, next);
 ```
 
 ## Context Methods
@@ -187,7 +144,7 @@ bot.webhookCallback(ctx, next);
 
 Helper method for reply to the current user.
 
-```javascript
+```typescript
 bot.command("start", ctx => {
   ctx.reply("Hello!");
 });
@@ -200,20 +157,21 @@ bot.command("start", ctx => {
 - `Markup.keyboard(buttons, options)`: Create keyboard
 - `Markup.button(label, color, payload)`: Create custom button
 - `Markup.oneTime()`: Set oneTime to keyboard
+- `Markup.inline()`: Send keyboard with the message
 
 #### Simple usage
 
-```js
+```typescript
 ctx.reply(
   "Select your sport",
   null,
-  Markup.keyboard(["Football", "Basketball"]).oneTime()
+  Markup.keyboard(["Football", "Basketball"]).inline()
 );
 ```
 
 #### Advanced usage
 
-```js
+```typescript
 ctx.reply(
   "How are you doing?",
   null,
@@ -242,7 +200,7 @@ Create keyboard with optional settings.
 Markup.keyboard(["one", "two", "three", "four", "five", "six"], { columns: 2 });
 ```
 
-```js
+```typescript
 /*
 
   By default, columns count for each string is 4.
@@ -258,7 +216,7 @@ Markup.keyboard(["one", "two", "three"]);
 
 Create custom button.
 
-```js
+```typescript
 Markup.button("Start", "positive", {
   foo: "bar"
 });
@@ -268,8 +226,16 @@ Markup.button("Start", "positive", {
 
 Helper method for create one time keyboard.
 
-```js
+```typescript
 Markup.keyboard(["Start", "Help"]).oneTime();
+```
+
+### .inline()
+
+Send keyboard in message box
+
+```typescript
+Markup.keyboard(["test", "Help"]).inline();
 ```
 
 ## Sessions
@@ -278,9 +244,9 @@ Store anything for current user in local (or [redis](https://github.com/nodejs-v
 
 ### Usage
 
-```javascript
-const VkBot = require("nodejs-vk-bot");
-const Session = require("nodejs-vk-bot/lib/session");
+```typescript
+import { VkBot } from "nodejs-vk-bot";
+import Session from "nodejs-vk-bot/lib/session";
 
 const bot = new VkBot(process.env.TOKEN);
 const session = new Session();
@@ -306,7 +272,7 @@ bot.startPolling();
 
 ##### Default `getSessionKey(ctx)`
 
-```js
+```typescript
 const getSessionKey = ctx => {
   const userId = ctx.message.from_id || ctx.message.user_id;
 
@@ -318,11 +284,11 @@ const getSessionKey = ctx => {
 
 Scene manager.
 
-```javascript
-const VkBot = require("nodejs-vk-bot");
-const Scene = require("nodejs-vk-bot/lib/scene");
-const Session = require("nodejs-vk-bot/lib/session");
-const Stage = require("nodejs-vk-bot/lib/stage");
+```typescript
+import { VkBot } from "nodejs-vk-bot";
+import { Scene } from "nodejs-vk-bot/lib/scene";
+import { Session } from "nodejs-vk-bot/lib/session";
+import { Stage } from "nodejs-vk-bot/lib/stage";
 
 const bot = new VkBot(process.env.TOKEN);
 const scene = new Scene(
@@ -372,7 +338,7 @@ bot.startPolling();
 
 #### Context
 
-```js
+```typescript
 ctx.scene.enter(name, [step]) // Enter in scene
 ctx.scene.leave()             // Leave from scene
 ctx.scene.next()              // Go to the next step in scene

@@ -1,4 +1,4 @@
-import { BotClass, Settings, ContextClass, MarkupClass, Middleware, pollHandler } from './types';
+import { Settings, ContextClass, MarkupClass, Middleware, pollHandler } from './types';
 import axios from 'axios';
 import { stringify } from 'querystring';
 import { Context } from './context';
