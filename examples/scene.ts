@@ -1,7 +1,4 @@
-const VkBot = require('../lib');
-const Session = require('../lib/session');
-const Stage = require('../lib/stage');
-const Scene = require('../lib/scene');
+import { VkBot, Session, Stage, Scene } from '../lib';
 
 const bot = new VkBot(process.env.TOKEN);
 const session = new Session();

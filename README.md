@@ -1,6 +1,6 @@
 # nodejs-vk-bot
 
-🤖 VK bot framework for Node.js, based on [Bots Long Poll API](https://vk.com/dev/bots_longpoll) and [Callback API](https://vk.com/dev.php?method=callback_api). forked from [node-vk-bot-api](https://github.com/node-vk-bot-api/node-vk-bot-api)
+🤖 VK bot framework for Node.js, based on [Bots Long Poll API](https://vk.com/dev/bots_longpoll) and [Callback API](https://vk.com/dev.php?method=callback_api). Forked from [node-vk-bot-api](https://github.com/node-vk-bot-api/node-vk-bot-api)
 
 ## Install
 

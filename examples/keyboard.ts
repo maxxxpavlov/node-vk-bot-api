@@ -1,7 +1,6 @@
-const VkBot = require('../lib');
-const Markup = require('../lib/markup');
+import { VkBot, Markup } from '../lib';
 
-const bot = new VkBot(process.env.TOKEN);
+const bot = new VkBot('Your token is here');
 
 bot.command('/sport', (ctx) => {
   ctx.reply('Select your sport', null, Markup
