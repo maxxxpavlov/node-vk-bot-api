@@ -7,7 +7,7 @@ class Context {
   client_info: any;
   constructor({ type, object: update }: ContextOptions, bot: BotClass) {
     if (type === 'message_new' && 'client_info' in update) {
-      this.message = { type, message: update.mesage, ...update };
+      this.message = { type, ...update.message };
       this.client_info = update.client_info;
     } else {
       this.message = { ...update, type };

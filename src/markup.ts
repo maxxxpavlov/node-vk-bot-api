@@ -30,6 +30,7 @@ class Markup implements MarkupClass {
     this.rawKeyboard.one_time = isOneTime;
     return this;
   }
+
   inline(isInline = true) {
     this.rawKeyboard.inline = isInline;
     return this;

@@ -26,13 +26,16 @@ interface BotClass {
   webhookCallback(...args: any[]);
   on;
 }
-interface ContextClass {
+interface Context {
   message: any;
   bot: any;
   session?: any;
   scene?: any;
   res?: any;
+  client_info?: any;
 }
+type ContextClass = any & Context;
+
 interface SceneClass {
   name: string;
   middlewares: any[];

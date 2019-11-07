@@ -71,7 +71,7 @@ class VkBot {
     });
   }
 
-  command(givenTriggers: string | string[], ...middlewares: any[]) {
+  command(givenTriggers: string | string[], ...middlewares: ContextClass[]) {
     const triggers = toArray(givenTriggers)
       .map(item => (item instanceof RegExp ? item : item.toLowerCase()));
 
@@ -85,7 +85,7 @@ class VkBot {
     });
   }
 
-  execute(method: any, settings: any) {
+  execute(method: any, settings: any): Promise<any> {
     return new Promise((resolve, reject) => {
       this.methods.push({
         callback: { resolve, reject },
@@ -148,7 +148,8 @@ class VkBot {
   }
 
   sendMessage(userId: number | number[], message: string | undefined | null = null,
-    attachment: string | undefined | null = null, keyboard: null | MarkupClass = null, sticker: null | string | undefined = null) {
+    attachment: string | undefined | null = null,
+    keyboard: null | MarkupClass = null, sticker: null | string | undefined = null): Promise<void> {
 
     if (Array.isArray(userId) && userId.length > 100) {
       throw new Error('Message can\'t be sent to more than 100 recipients.');
