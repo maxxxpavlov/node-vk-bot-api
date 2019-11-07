@@ -41,9 +41,9 @@ $ npm test
 - [.use(middleware)](#usemiddleware)
 - [.command(triggers, ...middlewares)](#commandtriggers-middlewares)
 - [.event(triggers, ...middlewares)](#eventtriggers-middlewares)
-- [.noCommand(...middlewares)](#nocommmand-middlewares)
+- [.noCommand(...middlewares)](#nocommmandmiddlewares)
 - [.sendMessage(userId, message, attachment, keyboard, sticker)](#sendmessageuserid-message-attachment-keyboard-sticker)
-- [.startPolling([callback])](#startpollingcallback)
+- [.startPolling()](#startpollingts)
 - [.on(event, handler)](#onevent-handler)
 - [.once(event, handler)](#onceevent-handler)
 - [.webhookCallback(...args)](#webhookcallbackargs)
@@ -111,7 +111,7 @@ bot.noCommand(ctx => {
 });
 ```
 
-### .sendMessage(userId, message, attachment, keyboard, sticker): Promise<void>
+### .sendMessage(userId, message, attachment, keyboard, sticker)
 
 Send message to user.
 
@@ -130,7 +130,7 @@ bot.sendMessage(145003487, {
 });
 ```
 
-### .startPolling(ts): void
+### .startPolling(ts)
 
 Start polling
 ts is timestamp of the last event you can get events after
@@ -140,7 +140,7 @@ ts is not required
 bot.startPolling(ts);
 ```
 
-### .on(event, handler): void
+### .on(event, handler)
 
 Set event listener, useful for saving last ts to DataBase
 
@@ -161,7 +161,7 @@ startPoll - emits when polling starts
 poll - when poll ends, returns ts
 error - emmits error
 
-### .once(event, handler): void
+### .once(event, handler)
 
 Set event listener which excecutes once
 
