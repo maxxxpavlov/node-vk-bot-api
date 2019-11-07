@@ -41,7 +41,7 @@ $ npm test
 - [.use(middleware)](#usemiddleware)
 - [.command(triggers, ...middlewares)](#commandtriggers-middlewares)
 - [.event(triggers, ...middlewares)](#eventtriggers-middlewares)
-- [.noCommand(...middlewares)](#nocommmand-middlewares)
+- [.noCommand(...middlewares)](#noCommandmiddlewares)
 - [.sendMessage(userId, message, attachment, keyboard, sticker)](#sendmessageuserid-message-attachment-keyboard-sticker)
 - [.startPolling()](#startpollingts)
 - [.on(event, handler)](#onevent-handler)
