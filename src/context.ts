@@ -1,11 +1,13 @@
-import { BotClass, ContextOptions } from './types';
+import { ContextOptions } from './types';
+import { VkBot } from './index';
 
 
 class Context {
   message: any;
-  bot: BotClass;
+  bot: VkBot;
   client_info: any;
-  constructor({ type, object: update }: ContextOptions, bot: BotClass) {
+
+  constructor({ type, object: update }: ContextOptions, bot: VkBot) {
     if (type === 'message_new' && 'client_info' in update) {
       this.message = { type, ...update.message };
       this.client_info = update.client_info;

@@ -1,31 +1,24 @@
 interface Settings {
-  token?: string;
+  token: string;
+  v?: string;
   polling_timeout?: number;
   execute_timeout?: number;
   group_id?: number;
   confirmation?: string;
   secret?: string;
+  pollingVersion?: number;
 }
+
 type Next = (ctx?: ContextClass, idx?: number) => boolean;
 type Middleware = (ctx: ContextClass, next: Next) => any;
 type pollHandler = (ts: number) => any;
 
-interface BotClass {
-  middlewares: any[];
-  methods: any[];
-  settings: Settings;
-  callExecute: any;
-  command: any;
-  sendMessage(userId: number | number[], message?: string | undefined | null,
-    attachment?: string | undefined | null, keyboard?: MarkupClass, sticker?: null | string | undefined): void;
-  startPolling(ts: number): Promise<any>;
-  getLongPollParams(): void;
-  use;
-  next;
-  execute;
-  webhookCallback(...args: any[]);
-  on;
+interface PollingParams {
+  key: string;
+  server: string;
+  ts: number;
 }
+
 interface Context {
   message: any;
   bot: any;
@@ -67,7 +60,6 @@ interface ButtonClass {
 
 export {
   Settings,
-  BotClass,
   ContextClass,
   SceneClass,
   StageClass,
@@ -76,5 +68,6 @@ export {
   ButtonClass,
   Middleware,
   pollHandler,
-  ButtonColor
+  ButtonColor,
+  PollingParams
 };

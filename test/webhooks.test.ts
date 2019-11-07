@@ -20,6 +20,7 @@ describe('webhooks', () => {
         'express',
         {
           type: 'confirmation',
+          object: {}
         },
         bot,
       );
@@ -32,6 +33,7 @@ describe('webhooks', () => {
         'koa',
         {
           type: 'confirmation',
+          object: {}
         },
         bot,
       );
@@ -44,6 +46,7 @@ describe('webhooks', () => {
         'express',
         {
           type: 'message_new',
+          object: {}
         },
         bot,
       );
@@ -56,6 +59,8 @@ describe('webhooks', () => {
         'koa',
         {
           type: 'message_new',
+          object: {}
+
         },
         bot,
       );
@@ -71,6 +76,8 @@ describe('webhooks', () => {
         'koa',
         {
           type: 'message_new',
+          object: {}
+
         },
         bot,
       );
@@ -83,6 +90,7 @@ describe('webhooks', () => {
         'koa',
         {
           type: 'message_new',
+          object: {}
         },
         bot,
       );
@@ -96,6 +104,7 @@ describe('webhooks', () => {
         {
           type: 'message_new',
           secret: bot.settings.secret,
+          object: {}
         },
         bot,
       );
@@ -109,6 +118,7 @@ describe('webhooks', () => {
         {
           type: 'message_new',
           secret: bot.settings.secret,
+          object: {}
         },
         bot,
       );

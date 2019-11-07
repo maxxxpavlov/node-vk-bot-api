@@ -8,7 +8,7 @@
 $ npm i nodejs-vk-bot
 ```
 
-## Usage
+## Simple example
 
 ```typescript
 import { VkBot } from "nodejs-vk-bot";
@@ -19,7 +19,8 @@ bot.command("/start", ctx => {
   ctx.reply("Hello!");
 });
 
-bot.startPolling().then(() => {
+bot.startPolling();
+bot.once("poll", () => {
   console.log("Long polling started");
 });
 ```
@@ -40,10 +41,10 @@ $ npm test
 - [.use(middleware)](#usemiddleware)
 - [.command(triggers, ...middlewares)](#commandtriggers-middlewares)
 - [.event(triggers, ...middlewares)](#eventtriggers-middlewares)
-- [.on(...middlewares)](#onmiddlewares)
-- [.onPoll(handler)](#onpoll)
+- [.noCommand(...middlewares)](#onmiddlewares)
 - [.sendMessage(userId, message, attachment, keyboard, sticker)](#sendmessageuserid-message-attachment-keyboard-sticker)
 - [.startPolling([callback])](#startpollingcallback)
+- [.on(event, handler)](#on)
 - [.webhookCallback(...args)](#webhookcallbackargs)
 
 ### constructor(settings)
@@ -59,7 +60,9 @@ const bot = new VkBot({
   token: process.env.TOKEN,
   group_id: process.env.GROUP_ID,
   execute_timeout: process.env.EXECUTE_TIMEOUT, // in ms   (50 by default)
-  polling_timeout: process.env.POLLING_TIMEOUT // in secs (25 by default)
+  polling_timeout: process.env.POLLING_TIMEOUT // in secs (25 by default),
+  v: '5.103', // Vk version, we do not recomend to change it
+  pollingVersion: 3  // Vk Polling version, we do not recomend to change it
 });
 ```
 
@@ -95,12 +98,12 @@ bot.event("message_edit", ctx => {
 });
 ```
 
-### .on(...middlewares)
+### .noCommand(...middlewares)
 
 Add reserved middlewares without triggers.
 
 ```typescript
-bot.on(ctx => {
+bot.noCommand(ctx => {
   ctx.reply("No commands for you.");
 });
 ```
@@ -124,15 +127,24 @@ bot.sendMessage(145003487, {
 });
 ```
 
-### .startPolling(ts): Promise<void>
+### .startPolling(ts): void
 
-Start polling, resolves promise when pollling started
+Start polling
 ts is timestamp of the last event you can get events after
 ts is not required
 
 ```typescript
-bot.startPolling().then(() => {
-  console.log("Bot started.");
+bot.startPolling();
+```
+
+### .once(event, handler): void
+
+Set event listener which excecutes once
+
+```typescript
+bot.startPolling();
+bot.once("botStart", ts => {
+  console.log("Bot started");
 });
 ```
 

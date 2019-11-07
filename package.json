@@ -36,7 +36,7 @@
     "callback api",
     "callback"
   ],
-  "author": "Mikhail Semin",
+  "author": "Mikhail Semin, Maksim Pavlov",
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/maxxxpavlov/nodejs-vk-bot/issues"

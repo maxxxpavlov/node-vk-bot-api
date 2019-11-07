@@ -94,7 +94,7 @@ describe('scenes', () => {
     bot.use(session.middleware());
 
     it('should set value in session', (done) => {
-      bot.on((ctx) => {
+      bot.noCommand((ctx) => {
         ctx.session.foo = 'bar';
 
         expect(ctx.session).to.be.an('object');
@@ -139,7 +139,7 @@ describe('scenes', () => {
       bot.use(session.middleware());
       bot.use(stage.middleware());
 
-      bot.on((ctx) => {
+      bot.noCommand((ctx) => {
         testSceneContext(ctx);
 
         ctx.scene.enter('test');
@@ -187,7 +187,7 @@ describe('scenes', () => {
       bot.use(session.middleware());
       bot.use(stage.middleware());
 
-      bot.on((ctx) => {
+      bot.noCommand((ctx) => {
         testSceneContext(ctx);
 
         ctx.scene.enter('test');
@@ -220,7 +220,7 @@ describe('scenes', () => {
       bot.use(session.middleware());
       bot.use(stage.middleware());
 
-      bot.on((ctx) => {
+      bot.noCommand((ctx) => {
         testSceneContext(ctx);
 
         ctx.scene.enter('test');
