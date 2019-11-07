@@ -1,2 +1,12 @@
 realTest
 src
+src
+node_modules
+.eslintrc
+.gitignore
+.travis.yaml
+package-lock.json
+tsconfig.json
+tslint.json
+yarn-error.log
+yarn.lock

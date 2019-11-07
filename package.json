@@ -1,14 +1,15 @@
 {
   "name": "nodejs-vk-bot",
   "version": "2.5.2",
-  "description": "🤖 VK bot framework for Node.js, based on Bots Long Poll API and Callback API. TypeScript version ",
+  "description": "🤖 VK bot framework for Node.js, based on Bots Long Poll API, Promises, EventEmmiter and TypeScript",
   "main": "lib/index.js",
   "files": [
     "lib"
   ],
   "scripts": {
-    "test": "set TS_NODE_COMPILER_OPTIONS={\"module\":\"commonjs\", \"target\": \"es6\"} && mocha -r ts-node/register test/**.ts --project lib/tsconfig.json --timeout 5000",
-    "prepublish": "tsc"
+    "test": "set TS_NODE_COMPILER_OPTIONS={\"module\":\"commonjs\", \"target\": \"es6\"} && mocha -r ts-node/register test/**.ts --project lib/tsconfig.json",
+    "prepublish": "tsc",
+    "build": "tsc"
   },
   "repository": {
     "type": "git",
@@ -32,9 +33,7 @@
     "vkontakte-api",
     "vkontakte-client",
     "vkapi",
-    "webhooks",
-    "callback api",
-    "callback"
+    "promises"
   ],
   "author": "Mikhail Semin, Maksim Pavlov",
   "license": "MIT",

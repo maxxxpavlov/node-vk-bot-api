@@ -5,7 +5,7 @@ const session = new Session();
 
 bot.use(session.middleware());
 
-bot.on((ctx) => {
+bot.noCommand((ctx) => {
   ctx.session.counter = ctx.session.counter || 0;
   ctx.session.counter += 1;
 

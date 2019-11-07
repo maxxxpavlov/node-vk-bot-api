@@ -20,7 +20,7 @@ bot.command("/start", ctx => {
 });
 
 bot.startPolling();
-bot.once("poll", () => {
+bot.once("startPoll", () => {
   console.log("Long polling started");
 });
 ```
@@ -41,10 +41,11 @@ $ npm test
 - [.use(middleware)](#usemiddleware)
 - [.command(triggers, ...middlewares)](#commandtriggers-middlewares)
 - [.event(triggers, ...middlewares)](#eventtriggers-middlewares)
-- [.noCommand(...middlewares)](#onmiddlewares)
+- [.noCommand(...middlewares)](#nocommmand-middlewares)
 - [.sendMessage(userId, message, attachment, keyboard, sticker)](#sendmessageuserid-message-attachment-keyboard-sticker)
 - [.startPolling([callback])](#startpollingcallback)
-- [.on(event, handler)](#on)
+- [.on(event, handler)](#onevent-handler)
+- [.once(event, handler)](#onceevent-handler)
 - [.webhookCallback(...args)](#webhookcallbackargs)
 
 ### constructor(settings)
@@ -84,7 +85,9 @@ Add middlewares with triggers for `message_new` event.
 
 ```typescript
 bot.command("start", ctx => {
-  ctx.reply("Hello!");
+  ctx.reply("Hello!").then(() => {
+    console.log("The message is successfuly sent");
+  });
 });
 ```
 
@@ -108,7 +111,7 @@ bot.noCommand(ctx => {
 });
 ```
 
-### .sendMessage(userId, message, attachment, keyboard, sticker)
+### .sendMessage(userId, message, attachment, keyboard, sticker): Promise<void>
 
 Send message to user.
 
@@ -134,8 +137,29 @@ ts is timestamp of the last event you can get events after
 ts is not required
 
 ```typescript
-bot.startPolling();
+bot.startPolling(ts);
 ```
+
+### .on(event, handler): void
+
+Set event listener, useful for saving last ts to DataBase
+
+```typescript
+bot.startPolling();
+bot.on("poll", ts => {
+  console.log(`Poll is done, ts: ${ts}`);
+});
+
+bot.on("error", err => {
+  console.log(err);
+});
+```
+
+### events
+
+startPoll - emits when polling starts
+poll - when poll ends, returns ts
+error - emmits error
 
 ### .once(event, handler): void
 
@@ -143,7 +167,7 @@ Set event listener which excecutes once
 
 ```typescript
 bot.startPolling();
-bot.once("botStart", ts => {
+bot.once("startPoll", ts => {
   console.log("Bot started");
 });
 ```

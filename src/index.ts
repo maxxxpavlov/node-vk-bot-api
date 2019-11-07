@@ -44,7 +44,7 @@ class VkBot extends EventEmitter {
 
     if (typeof userSettings === 'object') {
       this.settings = {
-        ...defaultSettings
+        ...defaultSettings,
         ...userSettings
       };
     } else {
@@ -63,7 +63,8 @@ class VkBot extends EventEmitter {
   api(method: string, settings = {}): Promise<any> {
     return new Promise((resolve, reject) => {
       axios.post(`https://api.vk.com/method/${method}`, stringify({
-        ...settings
+        ...settings,
+        v: this.settings.v
       })).then(({ data }) => {
         if (data.error) {
           reject(JSON.stringify(data));
@@ -85,9 +86,7 @@ class VkBot extends EventEmitter {
 
       this.middlewares.push({
         triggers,
-        fn(ctx: ContextClass) {
-          fn(ctx, () => this.next(ctx, idx));
-        }
+        fn: (ctx: ContextClass) => fn(ctx, () => this.next(ctx, idx)),
       });
     }
   }
@@ -98,6 +97,7 @@ class VkBot extends EventEmitter {
         callback: { resolve, reject },
         code: `API.${method}(${JSON.stringify({
           ...settings,
+          v: this.settings.v
         })})`,
       });
     });
@@ -108,6 +108,7 @@ class VkBot extends EventEmitter {
       if (!this.settings.group_id) {
         const { response } = await this.api('groups.getById', {
           access_token: this.settings.token,
+          v: this.settings.v
         }).catch((err) => {
           this.emit('error', new Error(err));
           throw new Error(err);
@@ -118,6 +119,7 @@ class VkBot extends EventEmitter {
       this.api('groups.getLongPollServer', {
         group_id: this.settings.group_id,
         access_token: this.settings.token,
+        v: this.settings.v
       }).then(({ response }) => {
         resolve(response);
       }).catch((err) => {
@@ -193,6 +195,7 @@ class VkBot extends EventEmitter {
 
   startPolling(ts: number = 0): void {
     this.getLongPollParams().then((params) => {
+      this.emit('startPoll');
       this.longPollParams = params;
       this.poll(ts);
     }).catch((err) => {
@@ -230,7 +233,7 @@ class VkBot extends EventEmitter {
       }
       this.poll(data.ts);
     }).catch((err) => {
-      this.emit('error', new PollingError());
+      this.emit('error', err);
     });
 
   }
@@ -274,7 +277,7 @@ class VkBot extends EventEmitter {
       })
         .then(({ response, execute_errors = [] }) => {
           execute_errors.forEach((err) => {
-            this.emit('error', err);
+            this.emit('error', JSON.parse(err));
           });
           response.forEach((body, i) => {
             slicedMethods[i].callback.resolve(body);
