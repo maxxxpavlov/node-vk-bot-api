@@ -1,6 +1,6 @@
 # nodejs-vk-bot
 
-🤖 VK bot framework for Node.js, based on [Bots Long Poll API](https://vk.com/dev/bots_longpoll) and [Callback API](https://vk.com/dev.php?method=callback_api). Forked from [node-vk-bot-api](https://github.com/node-vk-bot-api/node-vk-bot-api)
+🤖 Scalable VK bot framework for Node.js, based on [Bots Long Poll API](https://vk.com/dev/bots_longpoll) and [Callback API](https://vk.com/dev.php?method=callback_api). Based on [node-vk-bot-api](https://github.com/node-vk-bot-api/node-vk-bot-api)
 
 ## Install
 
@@ -19,10 +19,10 @@ bot.command("/start", ctx => {
   ctx.reply("Hello!");
 });
 
-bot.startPolling();
 bot.once("startPoll", () => {
   console.log("Long polling started");
 });
+bot.startPolling();
 ```
 
 ## Examples
