@@ -1,6 +1,6 @@
 {
   "name": "nodejs-vk-bot",
-  "version": "2.6.2",
+  "version": "2.6.3",
   "description": "🤖 VK bot framework for Node.js, based on Bots Long Poll API, Promises, EventEmmiter and TypeScript",
   "main": "lib/index.js",
   "files": [
