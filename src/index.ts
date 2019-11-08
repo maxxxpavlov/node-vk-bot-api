@@ -192,7 +192,6 @@ class VkBot extends EventEmitter {
     });
   }
 
-
   startPolling(ts: number = 0): void {
     this.getLongPollParams().then((params) => {
       this.emit('startPoll');
@@ -226,7 +225,7 @@ class VkBot extends EventEmitter {
             this.emit('error', new PollingError());
         }
       }
-      this.emit('poll', data.ts);
+      this.emit('poll', parseInt(data.ts, 10));
 
       for (const update of data.updates) {
         this.next(new Context(update, this));
@@ -238,12 +237,14 @@ class VkBot extends EventEmitter {
 
   }
 
-  use(middleware: Middleware): void {
-    const idx: number = this.middlewares.length;
+  use(...middlewares: Middleware[]): void {
+    for (const middleware of middlewares) {
+      const idx: number = this.middlewares.length;
 
-    this.middlewares.push({
-      fn: (ctx: ContextClass) => middleware(ctx, () => this.next(ctx, idx)),
-    });
+      this.middlewares.push({
+        fn: (ctx: ContextClass) => middleware(ctx, () => this.next(ctx, idx)),
+      });
+    }
   }
 
   webhookCallback(...args: any[]) {
