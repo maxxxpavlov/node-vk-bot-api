@@ -63,7 +63,7 @@ const bot = new VkBot({
   execute_timeout: process.env.EXECUTE_TIMEOUT, // in ms   (50 by default)
   polling_timeout: process.env.POLLING_TIMEOUT // in secs (25 by default),
   v: '5.103', // Vk version, we do not recomend to change it
-  pollingVersion: 3  // Vk Polling version, we do not recomend to change it
+  pollingVersion: 3  // Vk Polling version, we do not recommend to change it
 });
 ```
 
@@ -145,7 +145,6 @@ bot.startPolling(ts);
 Set event listener, useful for saving last ts to DataBase
 
 ```typescript
-bot.startPolling();
 bot.on("poll", ts => {
   console.log(`Poll is done, ts: ${ts}`);
 });
@@ -153,23 +152,27 @@ bot.on("poll", ts => {
 bot.on("error", err => {
   console.log(err);
 });
+
+bot.startPolling();
+
 ```
 
 ### events
 
-startPoll - emits when polling starts
-poll - when poll ends, returns ts
-error - emmits error
+"startPoll" - emits when polling starts
+"poll" - when poll ends, returns ts
+"error" - emmits error
 
 ### .once(event, handler)
 
 Set event listener which excecutes once
 
 ```typescript
-bot.startPolling();
 bot.once("startPoll", ts => {
   console.log("Bot started");
 });
+bot.startPolling();
+
 ```
 
 ## Context Methods
@@ -276,7 +279,7 @@ Markup.keyboard(["test", "Help"]).inline();
 
 ## Sessions
 
-Store anything for current user in local (or [redis](https://github.com/nodejs-vk-bot/nodejs-vk-bot-session-redis)) memory.
+Store anything for current user in local memory.
 
 ### Usage
 
@@ -321,10 +324,7 @@ const getSessionKey = ctx => {
 Scene manager.
 
 ```typescript
-import { VkBot } from "nodejs-vk-bot";
-import { Scene } from "nodejs-vk-bot/lib/scene";
-import { Session } from "nodejs-vk-bot/lib/session";
-import { Stage } from "nodejs-vk-bot/lib/stage";
+import { VkBot, Scene, Session, Stage } from "nodejs-vk-bot";
 
 const bot = new VkBot(process.env.TOKEN);
 const scene = new Scene(

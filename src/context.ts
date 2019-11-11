@@ -5,6 +5,7 @@ import { VkBot } from './index';
 class Context {
   message: any;
   bot: VkBot;
+  // tslint:disable-next-line
   client_info: any;
 
   constructor({ type, object: update }: ContextOptions, bot: VkBot) {
@@ -18,7 +19,7 @@ class Context {
   }
 
   reply(...args: any[]) {
-    return this.bot.sendMessage(this.message.peer_id || this.message.user_id, ...args);
+    return this.bot.sendMessage(this.message.peer_id || this.message.from_id, ...args);
   }
 }
 

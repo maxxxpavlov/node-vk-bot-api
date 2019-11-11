@@ -167,7 +167,7 @@ class VkBot extends EventEmitter {
         reject('Message can\'t be sent to more than 100 recipients.');
         return;
       }
-      const randomId = Math.random() * (1000000000 - 8) + 1;
+      const randomId = Math.random() * (1000000000 - 1) + 1;
       this.execute(
         'messages.send',
         Object.assign(
@@ -219,7 +219,6 @@ class VkBot extends EventEmitter {
           case 2:
             return this.startPolling(ts);
           case 3:
-            this.longPollParams = null;
             return this.startPolling(ts);
           default:
             this.emit('error', new PollingError());

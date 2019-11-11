@@ -21,8 +21,7 @@ class Session implements SessionClass {
   }
 
   getSessionKey = (ctx: any): string => {
-    const userId = ctx.message.from_id || ctx.message.user_id;
-    return `${userId}:${userId}`;
+    return `${ctx.message.peer_id}:${ctx.message.from_id}`;
   }
 
   middleware() {

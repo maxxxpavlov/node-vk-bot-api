@@ -5,9 +5,6 @@ class Stage implements StageClass {
   constructor(...scenes: SceneClass[]) {
     this.scenes = {};
 
-    scenes.forEach(({ name, middlewares }) => {
-      this.scenes[name] = middlewares;
-    });
     for (const { name, middlewares } of scenes) {
       this.scenes[name] = middlewares;
     }
