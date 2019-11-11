@@ -44,6 +44,7 @@
   "dependencies": {
     "axios": "^0.19.0",
     "biguint-format": "^1.0.1",
+    "form-data": "^3.0.0",
     "querystring": "^0.2.0"
   },
   "directories": {

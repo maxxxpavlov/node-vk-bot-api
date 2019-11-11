@@ -38,7 +38,7 @@ $ npm test
 ## Methods
 
 - [constructor(settings)](#constructorsettings)
-- [.use(middleware)](#usemiddleware)
+- [.use(...middlewares)](#use-middlewares)
 - [.command(triggers, ...middlewares)](#commandtriggers-middlewares)
 - [.event(triggers, ...middlewares)](#eventtriggers-middlewares)
 - [.noCommand(...middlewares)](#noCommandmiddlewares)
@@ -67,7 +67,7 @@ const bot = new VkBot({
 });
 ```
 
-### .use(middleware)
+### .use(...middlewares)
 
 Add simple middleware.
 
@@ -128,6 +128,10 @@ bot.sendMessage(145003487, {
   lat: 59.939095,
   lng: 30.315868
 });
+
+// Send image
+const file = fs.readFileSync('C:/Users/M4k5y/Projects/lilDiary/Services/bot/logo.png');
+bot.sendMessage(145003487, 'Look at my images!', file); // file is a png image Buffer 
 ```
 
 ### .startPolling(ts)
@@ -154,7 +158,6 @@ bot.on("error", err => {
 });
 
 bot.startPolling();
-
 ```
 
 ### events
@@ -172,7 +175,6 @@ bot.once("startPoll", ts => {
   console.log("Bot started");
 });
 bot.startPolling();
-
 ```
 
 ## Context Methods

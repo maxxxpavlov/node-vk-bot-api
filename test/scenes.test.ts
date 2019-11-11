@@ -50,7 +50,7 @@ describe('scenes', () => {
       expect(session.store).to.be.a('map');
       expect(session.key).to.be.a('string').to.be.equal('session');
       expect(session.getSessionKey).to.be.a('function');
-      expect(session.getSessionKey({ message: { from_id: 'uid' } })).to.be.a('string').to.be.equal('uid:uid');
+      expect(session.getSessionKey({ message: { from_id: 'uid', peer_id: 'peer' } })).to.be.a('string').to.be.equal('peer:uid');
       expect(session.middleware).to.be.a('function');
     });
 

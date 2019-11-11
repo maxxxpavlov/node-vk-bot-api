@@ -5,6 +5,7 @@ import { stringify } from 'querystring';
 import { Context } from './context';
 import { Request } from './request';
 import { toArray } from './utils/toArray';
+import { uploadPhoto } from './utils/uploadPhoto';
 import { Markup } from './markup';
 import { Scene } from './scene';
 import { Session } from './session';
@@ -159,35 +160,52 @@ class VkBot extends EventEmitter {
 
   sendMessage(userId: number | number[],
     message: string | undefined | null = null,
-    attachment: string | undefined | null = null,
+    attachment: string | undefined | null | Buffer = null,
     keyboard: null | MarkupClass = null,
-    sticker: null | string | undefined = null): Promise<void> {
+    sticker: null | string | undefined = null): Promise<{ id: number, img: any[] }> {
     return new Promise((resolve, reject) => {
       if (Array.isArray(userId) && userId.length > 100) {
         reject('Message can\'t be sent to more than 100 recipients.');
         return;
       }
+      const attachments: Buffer[] | string[] = toArray(attachment);
       const randomId = Math.random() * (1000000000 - 1) + 1;
-      this.execute(
-        'messages.send',
-        Object.assign(
-          Array.isArray(userId)
-            ? { user_ids: userId.join(',') }
-            : { peer_id: userId },
-          typeof userId === 'object'
-            ? userId[0]
-            : {
-              message,
-              attachment: toArray(attachment).join(','),
-              sticker_id: sticker,
-              keyboard: keyboard ? keyboard.toJSON() : undefined,
-              random_id: randomId
-            },
-        ),
-      ).then(() => {
-        resolve();
+      let uploaded: Promise<any>;
+      if (attachments[0] instanceof Buffer) {
+        if (attachments.length > 10) {
+          reject('Too many attachments');
+          return;
+        }
+        uploaded = uploadPhoto(this, Array.isArray(userId) ? userId[0] : userId, <Buffer[]>attachments);
+      } else {
+        uploaded = Promise.resolve(null);
+      }
+      uploaded.then((img: any[] | null) => {
+        const imageIDs = img ? img.reduce((ids, curr) => {
+          return `${ids},photo${img[0].owner_id}_${img[0].id}`;
+        }, '') : null;
+
+        this.execute(
+          'messages.send',
+          Object.assign(
+            Array.isArray(userId)
+              ? { user_ids: userId.join(',') }
+              : { peer_id: userId },
+            typeof userId === 'object'
+              ? userId[0]
+              : {
+                message,
+                attachment: imageIDs ? imageIDs : toArray(attachment).join(','),
+                sticker_id: sticker,
+                keyboard: keyboard ? keyboard.toJSON() : undefined,
+                random_id: randomId
+              },
+          ),
+        ).then((id) => {
+          resolve({ id, img });
+        });
       }).catch((err) => {
-        reject(err);
+        this.emit('error', err);
       });
     });
   }
@@ -272,12 +290,12 @@ class VkBot extends EventEmitter {
     for (let i = 0, j = Math.ceil(methods.length / 25); i < j; i += 1) {
       const slicedMethods = methods.slice(i * 25, i * 25 + 25);
       this.api('execute', {
-        code: `return [ ${slicedMethods.map(item => item.code)} ];`,
+        code: `return [${slicedMethods.map(item => item.code)}]; `,
         access_token: this.settings.token,
       })
         .then(({ response, execute_errors = [] }) => {
           execute_errors.forEach((err) => {
-            this.emit('error', JSON.parse(err));
+            this.emit('error', err);
           });
           response.forEach((body, i) => {
             slicedMethods[i].callback.resolve(body);
