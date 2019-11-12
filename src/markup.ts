@@ -44,7 +44,7 @@ class Markup implements MarkupClass {
     return new Markup().keyboard(keyboard, options);
   }
 
-  static button(label: string | any[],
+  static button(label: string | any,
     color: ButtonColor = 'default', payload: any = { button: label }) {
     if (typeof label === 'object') {
       return label;
