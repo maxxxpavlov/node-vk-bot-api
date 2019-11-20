@@ -1,17 +1,17 @@
-# nodejs-vk-bot
+# @lildiary/vk-bot
 
 🤖 Scalable VK bot framework for Node.js, based on [Bots Long Poll API](https://vk.com/dev/bots_longpoll) and [Callback API](https://vk.com/dev.php?method=callback_api). Based on [node-vk-bot-api](https://github.com/node-vk-bot-api/node-vk-bot-api)
 
 ## Install
 
 ```sh
-$ npm i nodejs-vk-bot
+$ npm i @lildiary/vk-bot
 ```
 
 ## Simple example
 
 ```typescript
-import { VkBot } from "nodejs-vk-bot";
+import { VkBot } from "@lildiary/vk-bot";
 
 const bot = new VkBot("TOKEN");
 
@@ -286,8 +286,8 @@ Store anything for current user in local memory.
 ### Usage
 
 ```typescript
-import { VkBot } from "nodejs-vk-bot";
-import Session from "nodejs-vk-bot/lib/session";
+import { VkBot } from "@lildiary/vk-bot";
+import Session from "@lildiary/vk-bot/lib/session";
 
 const bot = new VkBot(process.env.TOKEN);
 const session = new Session();
@@ -326,7 +326,7 @@ const getSessionKey = ctx => {
 Scene manager.
 
 ```typescript
-import { VkBot, Scene, Session, Stage } from "nodejs-vk-bot";
+import { VkBot, Scene, Session, Stage } from "@lildiary/vk-bot";
 
 const bot = new VkBot(process.env.TOKEN);
 const scene = new Scene(

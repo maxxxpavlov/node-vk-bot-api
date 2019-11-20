@@ -1,6 +1,6 @@
 {
   "name": "@lildiary/vk-bot",
-  "version": "2.6.7",
+  "version": "2.6.8",
   "description": "🤖 VK bot framework for Node.js, based on Bots Long Poll API, Promises, EventEmmiter and TypeScript",
   "main": "lib/index.js",
   "files": [
