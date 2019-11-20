@@ -111,8 +111,8 @@ class VkBot extends EventEmitter {
           access_token: this.settings.token,
           v: this.settings.v
         }).catch((err) => {
-          this.emit('error', new Error(err));
-          throw new Error(err);
+          this.emit('error', err);
+          reject(err);
         });
         this.settings.group_id = response[0].id;
       }
@@ -249,7 +249,7 @@ class VkBot extends EventEmitter {
       }
       this.poll(data.ts);
     }).catch((err) => {
-      this.emit('error', err);
+      this.emit('error', new PollingError(err));
     });
 
   }
