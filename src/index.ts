@@ -168,7 +168,8 @@ class VkBot extends EventEmitter {
     keyboard: null | MarkupClass = null,
     sticker: null | string | undefined = null): Promise<{ id: number, img: any[] }> {
     return new Promise((resolve, reject) => {
-      if (Array.isArray(userId) && userId.length > 100) {
+      const userIds = toArray(userId);
+      if (userIds.length > 100) {
         reject('Message can\'t be sent to more than 100 recipients.');
         return;
       }
@@ -177,35 +178,23 @@ class VkBot extends EventEmitter {
       let uploaded: Promise<any>;
       if (attachments[0] instanceof Buffer) {
         if (attachments.length > 10) {
-          reject('Too many attachments');
-          return;
+          return reject('Too many attachments');
         }
         uploaded = uploadPhoto(this, Array.isArray(userId) ? userId[0] : userId, <Buffer[]>attachments);
       } else {
         uploaded = Promise.resolve(null);
       }
       uploaded.then((img: any[] | null) => {
-        const imageIDs = img ? img.reduce((ids, curr) => {
-          return `${ids},photo${img[0].owner_id}_${img[0].id}`;
-        }, '') : null;
+        const imageIDs = img ? img.reduce(ids => `${ids},photo${img[0].owner_id}_${img[0].id}`, '') : null;
 
-        this.execute(
-          'messages.send',
-          Object.assign(
-            Array.isArray(userId)
-              ? { user_ids: userId.join(',') }
-              : { peer_id: userId },
-            typeof userId === 'object'
-              ? userId[0]
-              : {
-                message,
-                attachment: imageIDs ? imageIDs : toArray(attachment).join(','),
-                sticker_id: sticker,
-                keyboard: keyboard ? keyboard.toJSON() : undefined,
-                random_id: randomId
-              },
-          ),
-        ).then((id) => {
+        this.execute('messages.send', {
+          message,
+          user_ids: userIds.join(','),
+          attachment: imageIDs ? imageIDs : toArray(attachment).join(','),
+          sticker_id: sticker,
+          keyboard: keyboard ? keyboard.toJSON() : undefined,
+          random_id: randomId
+        }).then((id) => {
           resolve({ id, img });
         });
       }).catch((err) => {
