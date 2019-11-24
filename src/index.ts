@@ -106,17 +106,21 @@ class VkBot extends EventEmitter {
 
   getLongPollParams(): Promise<PollingParams> {
     return new Promise(async (resolve, reject) => {
-      if (!this.settings.group_id) {
-        const { response } = await this.api('groups.getById', {
-          access_token: this.settings.token,
-          v: this.settings.v
-        }).catch((err) => {
-          this.emit('error', err);
-          reject(err);
-        });
-        this.settings.group_id = response[0].id;
+      try {
+        if (!this.settings.group_id) {
+          const { response } = await this.api('groups.getById', {
+            access_token: this.settings.token,
+            v: this.settings.v
+          }).catch((err) => {
+            this.emit('error', err);
+            reject(err);
+          });
+          this.settings.group_id = response[0].id;
+        }
+      } catch (err) {
+        reject(err);
+        return;
       }
-
       this.api('groups.getLongPollServer', {
         group_id: this.settings.group_id,
         access_token: this.settings.token,
@@ -216,7 +220,7 @@ class VkBot extends EventEmitter {
       this.longPollParams = params;
       this.poll(ts);
     }).catch((err) => {
-      this.emit('error', err);
+      this.emit('error', new PollingError());
     });
   }
 
@@ -239,17 +243,17 @@ class VkBot extends EventEmitter {
           case 3:
             return this.startPolling(ts);
           default:
-            this.emit('error', new PollingError());
+            return this.emit('error', new PollingError());
         }
       }
-      this.emit('poll', parseInt(data.ts, 10));
-
-      for (const update of data.updates) {
-        this.next(new Context(update, this));
-      }
       this.poll(data.ts);
+      this.emit('poll', parseInt(data.ts, 10));
+      data.updates.forEach((update: any) => {
+        this.next(new Context(update, this));
+      });
     }).catch((err) => {
       this.emit('error', new PollingError(err));
+      this.startPolling(ts);
     });
 
   }

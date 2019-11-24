@@ -7,7 +7,7 @@
     "lib"
   ],
   "scripts": {
-    "test": "set TS_NODE_COMPILER_OPTIONS={\"module\":\"commonjs\", \"target\": \"es6\"} && mocha -r ts-node/register test/**.ts --project lib/tsconfig.json",
+    "test": "set TS_NODE_COMPILER_OPTIONS={\"module\":\"commonjs\", \"target\": \"es6\"} && mocha -r ts-node/register test/**.ts --project lib/tsconfig.json --exit",
     "prepublish": "tsc",
     "build": "tsc"
   },
