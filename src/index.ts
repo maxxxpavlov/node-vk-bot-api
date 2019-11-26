@@ -63,10 +63,15 @@ class VkBot extends EventEmitter {
 
   api(method: string, settings = {}): Promise<any> {
     return new Promise((resolve, reject) => {
-      axios.post(`https://api.vk.com/method/${method}`, stringify({
-        ...settings,
-        v: this.settings.v
-      })).then(({ data }) => {
+      axios({
+        url: `https://api.vk.com/method/${method}`,
+        method: 'POST',
+        timeout: (this.settings.polling_timeout + 2) * 1000,
+        data: stringify({
+          ...settings,
+          v: this.settings.v
+        })
+      }).then(({ data }) => {
         if (data.error) {
           reject(JSON.stringify(data));
         } else {
