@@ -39,7 +39,6 @@ class VkBot extends EventEmitter {
     } else if (typeof userSettings === 'object' && !userSettings.token) {
       throw new Error('You must set token param in settings');
     }
-
     this.middlewares = [];
     this.methods = [];
 

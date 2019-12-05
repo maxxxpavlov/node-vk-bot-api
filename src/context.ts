@@ -19,7 +19,7 @@ class Context {
   }
 
   reply(...args: any[]) {
-    return this.bot.sendMessage(this.message.peer_id || this.message.from_id, ...args);
+    return this.bot.sendMessage(this.message.peer_id || this.message.from_id || this.message.user_id, ...args);
   }
 }
 
